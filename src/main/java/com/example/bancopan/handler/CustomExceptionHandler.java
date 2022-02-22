@@ -35,6 +35,18 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(ClientFoundException.class)
+    public ResponseEntity<EntityErrorResponse> handleResourceNotFoundException (ClientFoundException exception){
+        List<StandardError> errors = new ArrayList<>();
+        errors.add(new StandardError(exception.getLocalizedMessage()));
+        EntityErrorResponse response = new EntityErrorResponse(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(AddressNotFoundException.class)
     public ResponseEntity<EntityErrorResponse> handleResourceNotFoundException (AddressNotFoundException exception){
         List<StandardError> errors = new ArrayList<>();

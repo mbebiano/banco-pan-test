@@ -8,6 +8,7 @@ import com.example.bancopan.domain.Gender;
 import com.example.bancopan.domain.State;
 import com.example.bancopan.dto.AddressDTO;
 import com.example.bancopan.dto.ClientDTO;
+import com.example.bancopan.exceptions.ClientFoundException;
 import com.example.bancopan.exceptions.ClientNotFoundException;
 import com.example.bancopan.repository.ClientRepository;
 import com.example.bancopan.service.AddressService;
@@ -123,6 +124,12 @@ public class ClientServiceImpl implements ClientService {
                 .withGender(Gender.MALE)
                 .withFirstName("Mattheus")
                 .withLastName("Bebiano");
+
+        Client clientFound = repository.findClientByDocument(client.getDocument());
+
+        if (!isNull(clientFound)){
+            throw new ClientFoundException("Already populated database");
+        }
 
         repository.save(client);
 
