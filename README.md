@@ -57,7 +57,7 @@ http://localhost:8080/swagger-ui.html
 
 Caso necessite poderá importar as collections utilizadas para realização de testes na aplicação:
 ```
-https://www.getpostman.com/collections/6f6c841605806f1776d6
+https://www.getpostman.com/collections/a5b5d0a3b12c0cd55614
 ```
 
 # API
