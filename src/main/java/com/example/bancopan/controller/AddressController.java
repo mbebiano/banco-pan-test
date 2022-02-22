@@ -18,7 +18,7 @@ public class AddressController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AddressController.class);
 
-    private AddressService service;
+    private final AddressService service;
 
     public AddressController(AddressService service) {
         this.service = service;

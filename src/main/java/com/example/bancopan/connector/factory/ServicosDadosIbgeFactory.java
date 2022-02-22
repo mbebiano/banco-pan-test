@@ -1,7 +1,6 @@
 package com.example.bancopan.connector.factory;
 
 import com.example.bancopan.connector.api.ServicosDadosIbgeAPI;
-import com.example.bancopan.connector.api.ViaCepAPI;
 import com.example.bancopan.utils.Environments;
 import com.example.bancopan.validations.erros.CustomErrorDecoder;
 import feign.Feign;

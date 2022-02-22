@@ -1,7 +1,6 @@
 package com.example.bancopan.validations.validator;
 
 import com.example.bancopan.BaseTest;
-import com.example.bancopan.exceptions.CPFNotValidException;
 import com.example.bancopan.exceptions.InvalidZipCodeException;
 import org.junit.Before;
 import org.junit.Test;

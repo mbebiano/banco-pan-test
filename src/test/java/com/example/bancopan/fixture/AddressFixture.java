@@ -4,7 +4,6 @@ import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.example.bancopan.domain.Address;
 import com.example.bancopan.domain.State;
-import com.example.bancopan.dto.AddressDTO;
 
 import static br.com.six2six.fixturefactory.Fixture.of;
 
