@@ -1,4 +1,4 @@
-package com.example.bancopan.domain;
+package com.example.bancopan.domain.enums;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
 
-public class CitiesResponse {
+public class CityResponse {
 
     @SerializedName("id")
     private String id;
@@ -18,7 +18,7 @@ public class CitiesResponse {
         return id;
     }
 
-    public CitiesResponse withId(String id) {
+    public CityResponse withId(String id) {
         this.id = id;
         return this;
     }
@@ -27,7 +27,7 @@ public class CitiesResponse {
         return name;
     }
 
-    public CitiesResponse withName(String name) {
+    public CityResponse withName(String name) {
         this.name = name;
         return this;
     }
@@ -41,7 +41,7 @@ public class CitiesResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CitiesResponse that = (CitiesResponse) o;
+        CityResponse that = (CityResponse) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 

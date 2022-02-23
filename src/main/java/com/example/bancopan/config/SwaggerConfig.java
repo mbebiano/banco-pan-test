@@ -1,5 +1,6 @@
 package com.example.bancopan.config;
 
+import com.example.bancopan.utils.Environments;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("API Banco Pan")
+                .title(Environments.BANCO_PAN_TITLE_SWAGGER)
                 .build();
     }
 

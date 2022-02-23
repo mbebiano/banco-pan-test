@@ -2,10 +2,10 @@ package com.example.bancopan.controller;
 
 
 import com.example.bancopan.BaseTest;
-import com.example.bancopan.controller.response.CitiesResponse;
-import com.example.bancopan.dto.StateDTO;
-import com.example.bancopan.fixture.CitiesResponseFixture;
-import com.example.bancopan.fixture.StateDTOFixture;
+import com.example.bancopan.controller.response.CityResponse;
+import com.example.bancopan.controller.response.StateResponse;
+import com.example.bancopan.fixture.CityResponseFixture;
+import com.example.bancopan.fixture.StateResponseFixture;
 import com.example.bancopan.service.StateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,10 +46,10 @@ public class StateControllerTest extends BaseTest {
 
 		String endpoint = "listAllStates";
 		String url = PATH +"/" + endpoint;
-		List<StateDTO> stateIBGEResponses = Collections.singletonList(from(StateDTO.class).
-				gimme(StateDTOFixture.STATE_DTO));
+		List<StateResponse> stateResponses = Collections.singletonList(from(StateResponse.class).
+				gimme(StateResponseFixture.STATE_RESPONSE));
 
-		when(service.findAllStates()).thenReturn(stateIBGEResponses);
+		when(service.findAllStates()).thenReturn(stateResponses);
 
 		mvc.perform(MockMvcRequestBuilders
 						.get(url)
@@ -65,10 +65,10 @@ public class StateControllerTest extends BaseTest {
 		String endpoint = "/listAllCitiesByState";
 		String state = "/MG";
 		String url = PATH + state + endpoint;
-		List<CitiesResponse> citiesResponses = Collections.singletonList(from(CitiesResponse.class).
-				gimme(CitiesResponseFixture.CITIES_RESPONSE));
+		List<CityResponse> cityRespons = Collections.singletonList(from(CityResponse.class).
+				gimme(CityResponseFixture.CITIES_RESPONSE));
 
-		when(service.listAllCitiesByState(state)).thenReturn(citiesResponses);
+		when(service.listAllCitiesByState(state)).thenReturn(cityRespons);
 
 		mvc.perform(MockMvcRequestBuilders
 						.get(url)

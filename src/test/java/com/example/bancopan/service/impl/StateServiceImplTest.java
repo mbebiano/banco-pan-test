@@ -1,9 +1,11 @@
 package com.example.bancopan.service.impl;
 
 import com.example.bancopan.BaseTest;
-import com.example.bancopan.connector.api.ServicosDadosIbgeAPI;
-import com.example.bancopan.controller.response.CitiesResponse;
+import com.example.bancopan.connector.api.IBGEDataServiceAPI;
+import com.example.bancopan.controller.response.CityResponse;
 import com.example.bancopan.controller.response.StateIBGEResponse;
+import com.example.bancopan.controller.response.StateResponse;
+import com.example.bancopan.converter.StateDTOToStateResponseConverter;
 import com.example.bancopan.converter.StateIBGEResponseToStateDTOConverter;
 import com.example.bancopan.dto.StateDTO;
 import com.example.bancopan.exceptions.StateNotFoundException;
@@ -17,16 +19,18 @@ import java.util.Collections;
 import java.util.List;
 
 import static br.com.six2six.fixturefactory.Fixture.from;
-import static com.example.bancopan.fixture.CitiesResponseFixture.CITIES_RESPONSE;
+import static com.example.bancopan.fixture.CityResponseFixture.CITIES_RESPONSE;
 import static com.example.bancopan.fixture.StateDTOFixture.*;
 import static com.example.bancopan.fixture.StateIBGEResponseFixture.*;
+import static com.example.bancopan.fixture.StateResponseFixture.*;
 import static java.math.BigInteger.ONE;
 import static org.mockito.Mockito.*;
 
 public class StateServiceImplTest extends BaseTest {
 
-    @Mock private ServicosDadosIbgeAPI servicosDadosIbgeAPI;
+    @Mock private IBGEDataServiceAPI IBGEDataServiceAPI;
     @Mock private StateIBGEResponseToStateDTOConverter stateDTOConverter;
+    @Mock private StateDTOToStateResponseConverter stateResponseConverter;
 
     @InjectMocks
     private StateServiceImpl service;
@@ -40,13 +44,17 @@ public class StateServiceImplTest extends BaseTest {
         List<StateDTO> stateDTOS = Collections.singletonList(from(StateDTO.class).
                 gimme(STATE_DTO));
 
+        List<StateResponse> stateResponses = Collections.singletonList(from(StateResponse.class).
+                gimme(STATE_RESPONSE));
+
         when(stateDTOConverter.apply(anyList())).thenReturn(stateDTOS);
-        when(servicosDadosIbgeAPI.getAllStates()).thenReturn(stateIBGEResponse);
+        when(stateResponseConverter.apply(anyList())).thenReturn(stateResponses);
+        when(IBGEDataServiceAPI.getAllStates()).thenReturn(stateIBGEResponse);
 
-        List<StateDTO> stateDTOSReturn = service.findAllStates();
+        List<StateResponse> stateResponsesReturn = service.findAllStates();
 
-        Assert.assertEquals(stateIBGEResponse.size(), stateDTOSReturn.size());
-        verify(this.servicosDadosIbgeAPI, times(ONE.intValue())).getAllStates();
+        Assert.assertEquals(stateIBGEResponse.size(), stateResponsesReturn.size());
+        verify(this.IBGEDataServiceAPI, times(ONE.intValue())).getAllStates();
 
     }
 
@@ -63,13 +71,19 @@ public class StateServiceImplTest extends BaseTest {
                 from(StateDTO.class).gimme(STATE_DTO_RJ),
                 from(StateDTO.class).gimme(STATE_DTO_SP));
 
-        when(servicosDadosIbgeAPI.getAllStates()).thenReturn(stateIBGEResponse);
+        List<StateResponse> stateResponses = Arrays.asList(
+                from(StateResponse.class).gimme(STATE_RESPONSE),
+                from(StateResponse.class).gimme(STATE_RESPONSE_RJ),
+                from(StateResponse.class).gimme(STATE_RESPONSE_SP));
+
+        when(stateResponseConverter.apply(anyList())).thenReturn(stateResponses);
+        when(IBGEDataServiceAPI.getAllStates()).thenReturn(stateIBGEResponse);
         when(stateDTOConverter.apply(anyList())).thenReturn(stateDTOS);
 
-        List<StateDTO> stateDTOSReturned = service.findAllStates();
+        List<StateResponse> statesResponsesReturn = service.findAllStates();
 
-        Assert.assertEquals(stateIBGEResponse.size(), stateDTOSReturned.size());
-        verify(this.servicosDadosIbgeAPI, times(ONE.intValue())).getAllStates();
+        Assert.assertEquals(stateIBGEResponse.size(), statesResponsesReturn.size());
+        verify(this.IBGEDataServiceAPI, times(ONE.intValue())).getAllStates();
 
     }
 
@@ -77,12 +91,13 @@ public class StateServiceImplTest extends BaseTest {
     public void shouldFailedToFindStates() {
 
         when(stateDTOConverter.apply(anyList())).thenReturn(null);
-        when(servicosDadosIbgeAPI.getAllStates()).thenReturn(null);
+        when(stateResponseConverter.apply(anyList())).thenReturn(null);
+        when(IBGEDataServiceAPI.getAllStates()).thenReturn(null);
 
-        List<StateDTO> stateDTOSReturned = service.findAllStates();
+        List<StateResponse> statesResponsesReturn = service.findAllStates();
 
-        Assert.assertNull(stateDTOSReturned);
-        verify(this.servicosDadosIbgeAPI, times(ONE.intValue())).getAllStates();
+        Assert.assertNull(statesResponsesReturn);
+        verify(this.IBGEDataServiceAPI, times(ONE.intValue())).getAllStates();
 
     }
 
@@ -91,18 +106,18 @@ public class StateServiceImplTest extends BaseTest {
 
         StateIBGEResponse stateIBGEResponse = from(StateIBGEResponse.class).gimme(STATE_IBGE_RESPONSE);
         List<StateIBGEResponse> stateIBGEResponses = Collections.singletonList(stateIBGEResponse);
-        List<CitiesResponse> citiesResponses = Collections.singletonList(from(CitiesResponse.class).
+        List<CityResponse> cityRespons = Collections.singletonList(from(CityResponse.class).
                 gimme(CITIES_RESPONSE));
 
-        when(servicosDadosIbgeAPI.getAllStates()).thenReturn(stateIBGEResponses);
-        when(servicosDadosIbgeAPI.findAllCitiesByStateId
-                (Integer.parseInt(stateIBGEResponse.getStateId()))).thenReturn(citiesResponses);
+        when(IBGEDataServiceAPI.getAllStates()).thenReturn(stateIBGEResponses);
+        when(IBGEDataServiceAPI.findAllCitiesByStateId
+                (Integer.parseInt(stateIBGEResponse.getStateId()))).thenReturn(cityRespons);
 
-        List<CitiesResponse> citiesResponsesReturn = service.listAllCitiesByState(stateIBGEResponse.getAcronym());
+        List<CityResponse> cityResponsesReturn = service.listAllCitiesByState(stateIBGEResponse.getAcronym());
 
-        Assert.assertEquals(citiesResponses.size(), citiesResponsesReturn.size());
-        verify(this.servicosDadosIbgeAPI, times(ONE.intValue())).getAllStates();
-        verify(this.servicosDadosIbgeAPI, times(ONE.intValue())).findAllCitiesByStateId(anyInt());
+        Assert.assertEquals(cityRespons.size(), cityResponsesReturn.size());
+        verify(this.IBGEDataServiceAPI, times(ONE.intValue())).getAllStates();
+        verify(this.IBGEDataServiceAPI, times(ONE.intValue())).findAllCitiesByStateId(anyInt());
 
     }
 
@@ -111,18 +126,18 @@ public class StateServiceImplTest extends BaseTest {
 
         StateIBGEResponse stateIBGEResponse = from(StateIBGEResponse.class).gimme(STATE_IBGE_RESPONSE);
         List<StateIBGEResponse> stateIBGEResponses = Collections.singletonList(stateIBGEResponse);
-        List<CitiesResponse> citiesResponses = Collections.singletonList(from(CitiesResponse.class).
+        List<CityResponse> cityRespons = Collections.singletonList(from(CityResponse.class).
                 gimme(CITIES_RESPONSE));
 
-        when(servicosDadosIbgeAPI.getAllStates()).thenReturn(stateIBGEResponses);
-        when(servicosDadosIbgeAPI.findAllCitiesByStateId
-                (Integer.parseInt(stateIBGEResponse.getStateId()))).thenReturn(citiesResponses);
+        when(IBGEDataServiceAPI.getAllStates()).thenReturn(stateIBGEResponses);
+        when(IBGEDataServiceAPI.findAllCitiesByStateId
+                (Integer.parseInt(stateIBGEResponse.getStateId()))).thenReturn(cityRespons);
 
-        List<CitiesResponse> citiesResponsesReturn = service.listAllCitiesByState("MZ");
+        List<CityResponse> cityResponsesReturn = service.listAllCitiesByState("MZ");
 
-        Assert.assertEquals(citiesResponses.size(), citiesResponsesReturn.size());
-        verify(this.servicosDadosIbgeAPI, times(ONE.intValue())).getAllStates();
-        verify(this.servicosDadosIbgeAPI, times(ONE.intValue())).findAllCitiesByStateId(anyInt());
+        Assert.assertEquals(cityRespons.size(), cityResponsesReturn.size());
+        verify(this.IBGEDataServiceAPI, times(ONE.intValue())).getAllStates();
+        verify(this.IBGEDataServiceAPI, times(ONE.intValue())).findAllCitiesByStateId(anyInt());
 
     }
 

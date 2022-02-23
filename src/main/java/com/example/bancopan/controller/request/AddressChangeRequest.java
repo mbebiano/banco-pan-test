@@ -1,7 +1,7 @@
 package com.example.bancopan.controller.request;
 
 import com.example.bancopan.domain.Address;
-import com.example.bancopan.domain.State;
+import com.example.bancopan.domain.enums.State;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

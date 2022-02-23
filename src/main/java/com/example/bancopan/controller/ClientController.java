@@ -60,10 +60,10 @@ public class ClientController {
 
         ClientDTO clientDTO = this.clientChangeAdressConverter.apply(request);
 
-        service.changeClientAddress(clientDTO);
+        ClientDTO clientDTOReturn = service.changeClientAddress(clientDTO);
 
         ClientChangedAddressResponse clientResponse = new ClientChangedAddressResponse().
-                withAddress(clientDTO.getAddressDTO());
+                withAddress(clientDTOReturn.getAddressDTO());
 
         LOGGER.info("stage=end method=ClientController.clientChangeAddress "
                 + "Message=Finished Client change response={}", clientResponse);

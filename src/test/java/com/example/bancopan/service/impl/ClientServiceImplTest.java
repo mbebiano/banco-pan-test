@@ -3,9 +3,10 @@ package com.example.bancopan.service.impl;
 import com.example.bancopan.BaseTest;
 import com.example.bancopan.controller.response.AddressResponse;
 import com.example.bancopan.converter.AddressToAddressResponseConverter;
+import com.example.bancopan.converter.ClientToClientDTOConverter;
 import com.example.bancopan.domain.Address;
 import com.example.bancopan.domain.Client;
-import com.example.bancopan.domain.State;
+import com.example.bancopan.domain.enums.State;
 import com.example.bancopan.dto.ClientDTO;
 import com.example.bancopan.exceptions.ClientNotFoundException;
 import com.example.bancopan.repository.ClientRepository;
@@ -31,6 +32,7 @@ public class ClientServiceImplTest extends BaseTest {
     @Mock private CPFValidator cpfValidator;
     @Mock private AddressService addressService;
     @Mock private AddressToAddressResponseConverter addressResponseConverter;
+    @Mock private ClientToClientDTOConverter clientToClientDTOConverter;
 
     @InjectMocks
     private ClientServiceImpl service;
@@ -78,6 +80,7 @@ public class ClientServiceImplTest extends BaseTest {
         when(repository.findClientByDocument(client.getDocument())).thenReturn(client);
         when(addressService.findByZipCode(any())).thenReturn(response);
         when(addressResponseConverter.apply(any(), any())).thenReturn(address);
+        when(clientToClientDTOConverter.apply(any())).thenReturn(clientDTO);
 
         ClientDTO clientDTOReturn = service.changeClientAddress(clientDTO);
 

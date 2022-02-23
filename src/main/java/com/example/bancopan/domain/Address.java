@@ -1,5 +1,6 @@
 package com.example.bancopan.domain;
 
+import com.example.bancopan.domain.enums.State;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;

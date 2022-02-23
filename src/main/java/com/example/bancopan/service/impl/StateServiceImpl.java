@@ -1,8 +1,10 @@
 package com.example.bancopan.service.impl;
 
-import com.example.bancopan.connector.api.ServicosDadosIbgeAPI;
-import com.example.bancopan.controller.response.CitiesResponse;
+import com.example.bancopan.connector.api.IBGEDataServiceAPI;
+import com.example.bancopan.controller.response.CityResponse;
 import com.example.bancopan.controller.response.StateIBGEResponse;
+import com.example.bancopan.controller.response.StateResponse;
+import com.example.bancopan.converter.StateDTOToStateResponseConverter;
 import com.example.bancopan.converter.StateIBGEResponseToStateDTOConverter;
 import com.example.bancopan.dto.StateDTO;
 import com.example.bancopan.exceptions.StateNotFoundException;
@@ -22,23 +24,25 @@ public class StateServiceImpl implements StateService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StateServiceImpl.class);
 
-    private final ServicosDadosIbgeAPI servicosDadosIbgeAPI;
+    private final IBGEDataServiceAPI IBGEDataServiceAPI;
 
     private final StateIBGEResponseToStateDTOConverter stateDTOConverter;
+
+    private final StateDTOToStateResponseConverter stateResponseConverter;
 
     private final List<String> listOfStatesInOrderOfPriority = List.of("SP", "RJ");
 
 
-    public StateServiceImpl(ServicosDadosIbgeAPI servicosDadosIbgeAPI,
-                            StateIBGEResponseToStateDTOConverter stateDTOConverter) {
+    public StateServiceImpl(IBGEDataServiceAPI IBGEDataServiceAPI,
+                            StateIBGEResponseToStateDTOConverter stateDTOConverter, StateDTOToStateResponseConverter stateResponseConverter) {
 
-        this.servicosDadosIbgeAPI = servicosDadosIbgeAPI;
-
+        this.IBGEDataServiceAPI = IBGEDataServiceAPI;
         this.stateDTOConverter = stateDTOConverter;
+        this.stateResponseConverter = stateResponseConverter;
     }
 
     @Override
-    public List<CitiesResponse> listAllCitiesByState(String state) {
+    public List<CityResponse> listAllCitiesByState(String state) {
 
         LOGGER.info("stage=init method=StateServiceImpl.listAllCitiesByState "
                 + "Message=Find all cities by state");
@@ -59,13 +63,13 @@ public class StateServiceImpl implements StateService {
         LOGGER.info("stage=end method=StateServiceImpl.listAllCitiesByState "
                 + "Message=Find all cities by state");
 
-        return servicosDadosIbgeAPI.
+        return IBGEDataServiceAPI.
                 findAllCitiesByStateId(Integer.parseInt(stateIBGEResponseFound.getStateId()));
 
     }
 
     @Override
-    public List<StateDTO> findAllStates() {
+    public List<StateResponse> findAllStates() {
 
         LOGGER.info("stage=init method=AddressServiceImpl.findAllStates "
                 + "Message=Find all States");
@@ -77,10 +81,12 @@ public class StateServiceImpl implements StateService {
 
         List<StateDTO> stateDTOS = stateDTOConverter.apply(statesOrdered);
 
+        List<StateResponse> stateResponses = stateResponseConverter.apply(stateDTOS);
+
         LOGGER.info("stage=init method=AddressServiceImpl.findAllStates "
                 + "Message=States size={}", statesOrdered.size());
 
-        return stateDTOS;
+        return stateResponses;
     }
 
     private List<StateIBGEResponse> getStatesFromIbge() {
@@ -88,7 +94,7 @@ public class StateServiceImpl implements StateService {
         LOGGER.info("stage=init method=AddressServiceImpl.getStatesFromIbge "
                 + "Message=Get all States");
 
-        List<StateIBGEResponse> stateIBGEResponseReturned = servicosDadosIbgeAPI.getAllStates();
+        List<StateIBGEResponse> stateIBGEResponseReturned = IBGEDataServiceAPI.getAllStates();
 
         if (isEmpty(stateIBGEResponseReturned)) {
             LOGGER.error("stage=end method=AddressServiceImpl.findAllStates message=States not found");

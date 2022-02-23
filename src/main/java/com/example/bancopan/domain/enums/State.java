@@ -1,4 +1,4 @@
-package com.example.bancopan.domain;
+package com.example.bancopan.domain.enums;
 
 import com.example.bancopan.exceptions.StateNotFoundException;
 import org.apache.commons.lang3.StringUtils;

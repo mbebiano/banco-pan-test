@@ -4,7 +4,7 @@ import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.example.bancopan.domain.Address;
 import com.example.bancopan.domain.Client;
-import com.example.bancopan.domain.Gender;
+import com.example.bancopan.domain.enums.Gender;
 
 import static br.com.six2six.fixturefactory.Fixture.of;
 

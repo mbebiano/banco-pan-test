@@ -1,7 +1,7 @@
 package com.example.bancopan.dto;
 
 import com.example.bancopan.domain.Address;
-import com.example.bancopan.domain.State;
+import com.example.bancopan.domain.enums.State;
 
 public class AddressDTO {
 

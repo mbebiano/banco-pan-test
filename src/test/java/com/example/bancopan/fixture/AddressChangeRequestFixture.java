@@ -3,7 +3,7 @@ package com.example.bancopan.fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.example.bancopan.controller.request.AddressChangeRequest;
-import com.example.bancopan.domain.State;
+import com.example.bancopan.domain.enums.State;
 
 import static br.com.six2six.fixturefactory.Fixture.of;
 

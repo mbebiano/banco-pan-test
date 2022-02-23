@@ -1,5 +1,7 @@
 package com.example.bancopan.domain;
 
+import com.example.bancopan.domain.enums.Gender;
+
 import javax.persistence.*;
 import java.util.Objects;
 

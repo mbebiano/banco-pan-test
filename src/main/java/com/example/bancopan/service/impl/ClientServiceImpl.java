@@ -2,10 +2,11 @@ package com.example.bancopan.service.impl;
 
 import com.example.bancopan.controller.response.AddressResponse;
 import com.example.bancopan.converter.AddressToAddressResponseConverter;
+import com.example.bancopan.converter.ClientToClientDTOConverter;
 import com.example.bancopan.domain.Address;
 import com.example.bancopan.domain.Client;
-import com.example.bancopan.domain.Gender;
-import com.example.bancopan.domain.State;
+import com.example.bancopan.domain.enums.Gender;
+import com.example.bancopan.domain.enums.State;
 import com.example.bancopan.dto.AddressDTO;
 import com.example.bancopan.dto.ClientDTO;
 import com.example.bancopan.exceptions.ClientFoundException;
@@ -33,14 +34,18 @@ public class ClientServiceImpl implements ClientService {
 
     private final AddressToAddressResponseConverter addressResponseConverter;
 
+    private final ClientToClientDTOConverter clientToClientDTOConverter;
+
     public ClientServiceImpl(ClientRepository repository,
                              CPFValidator cpfValidator, AddressService addressService,
-                             AddressToAddressResponseConverter addressResponseConverter){
+                             AddressToAddressResponseConverter addressResponseConverter,
+                             ClientToClientDTOConverter clientToClientDTOConverter){
 
         this.repository = repository;
         this.cpfValidator = cpfValidator;
         this.addressService = addressService;
         this.addressResponseConverter = addressResponseConverter;
+        this.clientToClientDTOConverter = clientToClientDTOConverter;
     }
 
     @Override
@@ -71,9 +76,9 @@ public class ClientServiceImpl implements ClientService {
 
         clientFound.withAddress(address);
 
-        repository.save(clientFound);
+        Client clientSaved = repository.save(clientFound);
 
-        ClientDTO clientDTOReturn = clientDTO.withAddressDTO(new AddressDTO(address));
+        ClientDTO clientDTOReturn = clientToClientDTOConverter.apply(clientSaved);
 
         LOGGER.info("stage=end method=ClientServiceImpl.changeClientAddress "
                 + "Message=Change client address={}", clientDTOReturn.getDocument());

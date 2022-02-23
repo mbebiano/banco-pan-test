@@ -2,7 +2,7 @@ package com.example.bancopan.converter;
 
 import com.example.bancopan.controller.response.AddressResponse;
 import com.example.bancopan.domain.Address;
-import com.example.bancopan.domain.State;
+import com.example.bancopan.domain.enums.State;
 import com.example.bancopan.dto.AddressDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

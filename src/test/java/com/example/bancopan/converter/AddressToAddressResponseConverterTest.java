@@ -3,7 +3,7 @@ package com.example.bancopan.converter;
 import com.example.bancopan.BaseTest;
 import com.example.bancopan.controller.response.AddressResponse;
 import com.example.bancopan.domain.Address;
-import com.example.bancopan.domain.State;
+import com.example.bancopan.domain.enums.State;
 import com.example.bancopan.dto.AddressDTO;
 import org.junit.Before;
 import org.junit.Test;
