@@ -1,29 +1,30 @@
-# Vis„o geral
+# Vis√£o geral
 
-O projeto È um serviÁo back-end, com o objetivo de atender os requisitos elencados pelo Banco Pan.
+O projeto √© um servi√ßo back-end, com o objetivo de atender os requisitos elencados pelo Banco Pan.
 
-Afim de auxiliar o prcesso de testes encontra-se disponivel um serviÁo para persistÍncia de cliente.
+Afim de auxiliar o prcesso de testes encontra-se disponivel um servi√ßo para persist√™ncia de cliente.
 
 ## Tecnologias
 
-- [Spring Boot](https://projects.spring.io/spring-boot) È uma framework que auxilia na configuraÁ„o e execuÁ„o de aplicaÁıes Java, e que tem como objetivo facilitar esses pontos contribuindo tambÈm para a agilidade no procecsso de desenvolvimento.
+- [Spring Boot](https://projects.spring.io/spring-boot) √© uma framework que auxilia na configura√ß√£o e execu√ß√£o de aplica√ß√µes Java, e que tem como objetivo facilitar esses pontos contribuindo tamb√©m para a agilidade no procecsso de desenvolvimento.
 
-- [Spring Data](https://spring.io/projects/spring-data) Facilita o uso de tecnologias de acesso a dados, bancos de dados relacionais e n„o relacionais sendo sua miss„o fornecer um modelo de programaÁ„o familiar e consistente baseado em Spring para acesso a dados.
+- [Spring Data](https://spring.io/projects/spring-data) Facilita o uso de tecnologias de acesso a dados, bancos de dados relacionais e n√£o relacionais sendo sua miss√£o fornecer um modelo de programa√ß√£o familiar e consistente baseado em Spring para acesso a dados.
 
+- [H2 Database](https://www.h2database.com/html/main.html) Utiliza√ß√£o do banco de dados H2 como reposit√≥rio em mem√≥ria.
 
-# Setup da aplicaÁ„o (local)
+# Setup da aplica√ß√£o (local)
 
-## PrÈ-requisito
+## Pr√©-requisito
 
-Antes de rodar a aplicaÁ„o È preciso garantir que as seguintes dependÍncias estejam corretamente instaladas:
+Antes de rodar a aplica√ß√£o √© preciso garantir que as seguintes depend√™ncias estejam corretamente instaladas:
 ```
 Java 11
 Maven 3.8.4 
 ```
 
-## InstalaÁ„o da aplicaÁ„o
+## Instala√ß√£o da aplica√ß√£o
 
-Primeiramente, faÁa o clone do repositÛrio:
+Primeiramente, fa√ßa o clone do reposit√≥rio:
 ```
 git clone https://github.com/mbebiano/banco-pan-test
 ```
@@ -31,16 +32,16 @@ Feito isso, acesse o projeto:
 ```
 cd banco-pan-test
 ```
-… preciso compilar o cÛdigo e baixar as dependÍncias do projeto:
+√â preciso compilar o c√≥digo e baixar as depend√™ncias do projeto:
 ```
 mvn clean install
 ```
 
-Finalizado esse passo, vamos iniciar a aplicaÁ„o:
+Finalizado esse passo, vamos iniciar a aplica√ß√£o:
 ```
 mvn spring-boot:run
 ```
-Pronto. A aplicaÁ„o back-end est· disponÌvel em http://localhost:8080/
+Pronto. A aplica√ß√£o back-end est√° dispon√≠vel em http://localhost:8080/
 ```
 Tomcat started on port(s): 8080 (http)
 Started BancopanApplication in xxxx seconds (JVM running for xxxx)
@@ -48,17 +49,11 @@ Started BancopanApplication in xxxx seconds (JVM running for xxxx)
 
 ## Swagger
 
-A API fornece uma breve documentaÁ„o via Swagger. ApÛs startada, vocÍ poder· acess·-la atravÈs da url:
-```
-http://localhost:8080/swagger-ui.html
-```
+A API fornece uma breve documenta√ß√£o via Swagger. Ap√≥s startada, voc√™ poder√° acess√°-la atrav√©s da url [Local Swagger](http://localhost:8080/swagger-ui.html).
 
 ## Collections
 
-Caso necessite poder· importar as collections utilizadas para realizaÁ„o de testes na aplicaÁ„o:
-```
-https://www.getpostman.com/collections/a5b5d0a3b12c0cd55614
-```
+Caso necessite poder√° importar as collections utilizadas para realiza√ß√£o de testes na aplica√ß√£o [Collections Postman](https://www.getpostman.com/collections/a5b5d0a3b12c0cd55614).
 
 # API
 
